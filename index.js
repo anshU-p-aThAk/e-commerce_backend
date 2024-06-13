@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 //Image Storage
 
 const storage = multer.diskStorage({
-    destination: "./upload/images",
+    destination: "https://e-commerce-backend-p53b.onrender.com/upload/images",
     filename: (req, file, cb) => {
         return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
     }
