@@ -32,27 +32,27 @@ app.get("/", (req, res) => {
     res.send("Express app is running")
 })
 
-//Image Storage
-
+// Image Storage
 const storage = multer.diskStorage({
-    destination: "https://e-commerce-backend-p53b.onrender.com/upload/images",
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, 'upload', 'images')); // Ensure this directory exists
+    },
     filename: (req, file, cb) => {
-        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
+        cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
     }
-})
+});
 
 const upload = multer({ storage });
 
-//Upload Endpoint for images
-app.use("/images", express.static("upload/images"))
+// Upload Endpoint for images
+app.use("/images", express.static(path.join(__dirname, 'upload', 'images')));
 
 app.post("/upload", upload.single("product"), (req, res) => {
     res.json({
         success: 1,
         image_url: `https://e-commerce-backend-p53b.onrender.com/images/${req.file.filename}`
-    })
-})
-
+    });
+});
 //Schema for Products
 
 const Product = mongoose.model("Product", {
