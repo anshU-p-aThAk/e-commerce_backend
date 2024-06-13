@@ -14,7 +14,7 @@ app.use(cors());
 env.config();
 
 //DB connection
-const dbURI = process.env.MONGO_URI
+const dbURI = process.env.MONGO_URI;
 
 
 // DB connection
@@ -49,7 +49,7 @@ app.use("/images", express.static("upload/images"))
 app.post("/upload", upload.single("product"), (req, res) => {
     res.json({
         success: 1,
-        image_url: `http://localhost:${port}/images/${req.file.filename}`
+        image_url: `https://e-commerce-backend-p53b.onrender.com/images/${req.file.filename}`
     })
 })
 
